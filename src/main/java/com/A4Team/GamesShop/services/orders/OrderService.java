@@ -17,7 +17,7 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    @Cacheable("allOrder")
+    // @Cacheable("allOrder")
     public List<Order> findAll() {
         return orderRepository.findAll();
     }

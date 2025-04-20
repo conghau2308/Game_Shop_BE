@@ -15,7 +15,7 @@ public class GameWithPlatformService {
     @Autowired
     private GameWithPlatformRepository gameWithPlatformRepository;
 
-    @Cacheable("allGamesWithPlatform")
+    // @Cacheable("allGamesWithPlatform")
     public List<GameWithPlatform> findAll() {
         return gameWithPlatformRepository.findAll();
     }

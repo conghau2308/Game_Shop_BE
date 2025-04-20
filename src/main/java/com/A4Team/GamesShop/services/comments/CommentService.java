@@ -19,7 +19,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    @Cacheable("allComments")
+    // @Cacheable("allComments")
     public List<CommentDTO> findAllDTO() {
         return commentRepository.findAll().stream()
                 .map(CommentMapper::toDTO)
