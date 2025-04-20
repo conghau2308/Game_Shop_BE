@@ -16,7 +16,7 @@ public class GameWithPricessService {
     @Autowired
     private GameWithPriceRepository gameWithPriceRepository;
 
-    @Cacheable("allGamesWithPrice")
+    // @Cacheable("allGamesWithPrice")
     public List<GameWithPrice> findAll() {
         return gameWithPriceRepository.findAll();
     }

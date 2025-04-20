@@ -19,7 +19,7 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Cacheable("allReviews")
+    // @Cacheable("allReviews")
     public List<ReviewDTO> findAllDTO() {
         return reviewRepository.findAll().stream()
                 .map(ReviewMapper::toDTO)
