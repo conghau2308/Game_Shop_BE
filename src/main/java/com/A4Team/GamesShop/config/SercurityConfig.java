@@ -23,12 +23,13 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SercurityConfig {
-    
+
     @Autowired
     private Environment env;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource, CustomSecurityFilter filter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource,
+            CustomSecurityFilter filter) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -49,7 +50,8 @@ public class SercurityConfig {
                     auth.requestMatchers("/api/payment/submitOrder").permitAll();
                     // auth.requestMatchers("/api/purchases/**").permitAll();
                     auth.requestMatchers("/api/order-purchases/**").permitAll();
-                    auth.requestMatchers("/api/user/me", "/api/user/update", "/api/files/avatar", "/api/user/change-email", "/api/user/change-password")
+                    auth.requestMatchers("/api/user/me", "/api/user/update", "/api/files/avatar",
+                            "/api/user/change-email", "/api/user/change-password")
                             .hasAnyRole("USER", "ADMIN", "STAFF");
                     auth.requestMatchers("/swagger-ui/**",
                             "/v3/api-docs/**",
@@ -64,9 +66,13 @@ public class SercurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "https://game-shop-fe.vercel.app"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
