@@ -40,6 +40,7 @@ public class SercurityConfig {
                     for (String url : publicUrls) {
                         auth.requestMatchers(url.trim()).permitAll();
                     }
+                    auth.requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll();
                     auth.requestMatchers("/auth/google/**").permitAll();
                     auth.requestMatchers("/api/games/**").permitAll();
                     auth.requestMatchers("/api/comments/**").permitAll();
