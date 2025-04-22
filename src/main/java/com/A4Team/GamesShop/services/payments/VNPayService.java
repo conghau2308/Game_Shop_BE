@@ -39,9 +39,9 @@ public class VNPayService {
         String locate = "vn";
         vnp_Params.put("vnp_Locale", locate);
 
-        urlReturn += VNPayConfig.vnp_Returnurl;
-        String successUrl = "http://localhost:5173/checkPayment";
-        vnp_Params.put("vnp_ReturnUrl", successUrl);
+        // urlReturn += VNPayConfig.vnp_Returnurl;
+        // String successUrl = "http://localhost:5173/checkPayment";
+        vnp_Params.put("vnp_ReturnUrl", urlReturn);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         // Tạo ngày tạo và ngày hết hạn cho giao dịch

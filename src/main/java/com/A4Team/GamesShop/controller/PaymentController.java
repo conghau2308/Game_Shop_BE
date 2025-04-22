@@ -21,9 +21,12 @@ public class PaymentController {
     @PostMapping("/submitOrder")
     public String submitOrder(@RequestParam("amount") long amount,  // Truyền số tiền thay vì id
                               HttpServletRequest request) {
-        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        // String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         // Gọi service để tạo URL thanh toán với số tiền
-        String vnpayUrl = vnPayService.createOrder(amount, baseUrl);
+        String baseUrl = request.getHeader("Origin");
+        System.out.println("Base URL: " + baseUrl);
+        String returnUrl = baseUrl + "/checkPayment";
+        String vnpayUrl = vnPayService.createOrder(amount, returnUrl);
         return "redirect:" + vnpayUrl;  // Redirect tới URL thanh toán VNPay
     }
 
