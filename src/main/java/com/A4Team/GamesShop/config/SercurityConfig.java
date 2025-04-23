@@ -71,7 +71,8 @@ public class SercurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:5173",
-                "https://game-shop-fe.vercel.app"
+                "https://game-shop-fe.vercel.app",
+                "https://measured-dassie-fast.ngrok-free.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));

@@ -21,6 +21,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.jar
 
 .env
 
