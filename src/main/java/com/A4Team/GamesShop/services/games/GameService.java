@@ -21,7 +21,7 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    // @Cacheable(value = "limitedGames", key = "#limit")
+    @Cacheable(value = "limitedGames", key = "#limit")
     public List<Game> findLimited(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return gameRepository.findAll(pageable).getContent();

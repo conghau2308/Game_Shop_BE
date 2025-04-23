@@ -26,7 +26,7 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    // @Cacheable(value = "limitedComments", key = "#limit")
+    @Cacheable(value = "limitedComments", key = "#limit")
     public List<CommentDTO> findLimitedDTO(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return commentRepository.findAll(pageable).getContent().stream()
@@ -34,12 +34,14 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(value = "commentsById")
     public CommentDTO findByIdDTO(int id) {
         return commentRepository.findById(id)
                 .map(CommentMapper::toDTO)
                 .orElse(null);
     }
 
+    @Cacheable(value = "commentsOfGameId")
     public List<CommentDTO> findByGameIdDTO(Integer gameId) {
         return commentRepository.findByGameId(gameId).stream()
                 .map(CommentMapper::toDTO)

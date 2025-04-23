@@ -21,12 +21,13 @@ public class GameWithPricessService {
         return gameWithPriceRepository.findAll();
     }
 
-    // @Cacheable(value = "limitedGamesWithPrice", key = "#limit")
+    @Cacheable(value = "limitedGamesWithPrice", key = "#limit")
     public List<GameWithPrice> findLimited(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return gameWithPriceRepository.findAll(pageable).getContent();
     }
 
+    @Cacheable(value = "gameWithPriceById", key = "#gameId")
     public GameWithPrice findByGameId(int gameId) {
         return gameWithPriceRepository.findByGameId(gameId);
     }

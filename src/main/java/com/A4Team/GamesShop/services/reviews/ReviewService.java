@@ -5,6 +5,7 @@ import com.A4Team.GamesShop.mapper.ReviewMapper;
 import com.A4Team.GamesShop.repository.ReviewRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,7 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    // @Cacheable(value = "limitedReviews", key = "#limit")
+    @Cacheable(value = "limitedReviews", key = "#limit")
     public List<ReviewDTO> findLimitedDTO(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return reviewRepository.findAll(pageable).getContent().stream()
@@ -48,6 +49,7 @@ public class ReviewService {
     }
 
     // @Cacheable("reviewsByUserId")
+    @CacheEvict(value = "ReviewsByUserId", key = "userId")
     public List<ReviewDTO> findByUserIdDTO(Integer userId) {
         return reviewRepository.findByUserId(userId).stream()
                 .map(ReviewMapper::toDTO)
@@ -55,6 +57,7 @@ public class ReviewService {
     }
 
     // Lọc reviews theo gameId và use_ful = 0
+    @CacheEvict(value = "ReviewsWithUseFulEqual", key = "#gameId")
     public List<ReviewDTO> findByGameIdAndUseFulEqual(int gameId, int useFul) {
         return reviewRepository.findByGameIdAndUseFul(gameId, useFul).stream()
                 .map(ReviewMapper::toDTO)
@@ -62,6 +65,7 @@ public class ReviewService {
     }
 
     // Lọc reviews theo gameId và use_ful > 0
+    @Cacheable(value = "ReviewsWithUseFulGreaterThan", key = "#gameId" + '_' + "#threshold")
     public List<ReviewDTO> findByGameIdAndUseFulGreaterThan(int gameId, int threshold) {
         return reviewRepository.findByGameIdAndUseFulGreaterThan(gameId, threshold).stream()
                 .map(ReviewMapper::toDTO)

@@ -5,6 +5,7 @@ import com.A4Team.GamesShop.entities.Order;
 import com.A4Team.GamesShop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    @CacheEvict(value = "orderByUserId", key = "#userId")
     public List<OrderDTO> findByUserId(int userId) {
         List<Object[]> raw = orderRepository.findByUserIdNative(userId);
         return raw.stream().map(row -> new OrderDTO(
