@@ -25,7 +25,7 @@ public class GameWithPlatformService {
         return gameWithPlatformRepository.findByGameIdNative(gameId);
     }
 
-    @Cacheable(value = "gamesByPlatform", key = "#platformName + '_' + #limit")
+    @Cacheable(value = "gamesByPlatform", key = "#platformName + #limit")
     public List<Object[]> findByPlatformName(String platformName, int limit) {
         return gameWithPlatformRepository.findByPlatformName(platformName, PageRequest.of(0, limit));
     }      

@@ -34,14 +34,14 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
-    @Cacheable(value = "commentsById")
+    @Cacheable(value = "commentsById", key = "#id")
     public CommentDTO findByIdDTO(int id) {
         return commentRepository.findById(id)
                 .map(CommentMapper::toDTO)
                 .orElse(null);
     }
 
-    @Cacheable(value = "commentsOfGameId")
+    @Cacheable(value = "commentsOfGameId", key = "#gameId")
     public List<CommentDTO> findByGameIdDTO(Integer gameId) {
         return commentRepository.findByGameId(gameId).stream()
                 .map(CommentMapper::toDTO)

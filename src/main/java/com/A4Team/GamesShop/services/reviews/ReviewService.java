@@ -49,7 +49,7 @@ public class ReviewService {
     }
 
     // @Cacheable("reviewsByUserId")
-    @CacheEvict(value = "ReviewsByUserId", key = "userId")
+    @Cacheable(value = "ReviewsByUserId", key = "#userId")
     public List<ReviewDTO> findByUserIdDTO(Integer userId) {
         return reviewRepository.findByUserId(userId).stream()
                 .map(ReviewMapper::toDTO)
@@ -65,7 +65,7 @@ public class ReviewService {
     }
 
     // Lọc reviews theo gameId và use_ful > 0
-    @Cacheable(value = "ReviewsWithUseFulGreaterThan", key = "#gameId" + '_' + "#threshold")
+    @Cacheable(value = "ReviewsWithUseFulGreaterThan", key = "#gameId + #threshold")
     public List<ReviewDTO> findByGameIdAndUseFulGreaterThan(int gameId, int threshold) {
         return reviewRepository.findByGameIdAndUseFulGreaterThan(gameId, threshold).stream()
                 .map(ReviewMapper::toDTO)

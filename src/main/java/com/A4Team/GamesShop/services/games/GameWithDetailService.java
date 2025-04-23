@@ -19,7 +19,7 @@ public class GameWithDetailService {
 
     private final GameWithDetailRepository gameWithDetailRepository;
 
-    @Cacheable("GameDetails")
+    @Cacheable(value = "GameDetails", key = "#gameId")
     public GameMinimalDetail getGameDetailByGameId(int gameId) {
         List<Object[]> rows = gameWithDetailRepository.findMinimalDetailByGameId(gameId);
     

@@ -9,6 +9,7 @@ import com.A4Team.GamesShop.services.reviews.ReviewService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,7 @@ public class ReviewController {
     }
 
     @PostMapping("/review-game")
+    @CacheEvict(value = "ReviewsByUserId", key = "#request.userId")
     public ResponseEntity<?> review(@Valid @RequestBody ReviewRequest request) {
         reviewGameService.create(request);
         return ResponseEntity.ok(BaseResponse.success(null, "Review submitted successfully"));

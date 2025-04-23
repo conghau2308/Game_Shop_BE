@@ -23,7 +23,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    @CacheEvict(value = "orderByUserId", key = "#userId")
+    @Cacheable(value = "orderByUserId", key = "#userId")
     public List<OrderDTO> findByUserId(int userId) {
         List<Object[]> raw = orderRepository.findByUserIdNative(userId);
         return raw.stream().map(row -> new OrderDTO(

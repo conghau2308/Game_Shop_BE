@@ -6,6 +6,7 @@ import com.A4Team.GamesShop.services.purchases.PurchaseService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +20,7 @@ public class PurchaseController {
     /**
      * API để tạo đơn hàng mới
      */
+    @CacheEvict(value = "orderByUserId", key = "#orderRequest.purchaseRequest.userId")
     @PostMapping("/order")
     public ResponseEntity<BaseResponse<Void>> createOrderPurchase(@Valid @RequestBody PurchaseAllRequest orderRequest) {
         // Truyền cả PurchaseRequest và PurchaseHistoryRequest vào service
