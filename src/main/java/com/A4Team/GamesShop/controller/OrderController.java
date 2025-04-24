@@ -26,12 +26,12 @@ public class OrderController {
     @GetMapping("/user/{userId}")
     public BaseResponse<List<OrderDTO>> getOrdersByUserId(@PathVariable int userId) {
         List<OrderDTO> orders = orderService.findByUserId(userId);
-        if (orders.isEmpty()) {
-            return BaseResponse.error(
-                    HttpStatus.NOT_FOUND,
-                    "No orders found for user",
-                    List.of("No orders found for user ID = " + userId));
-        }
+        // if (orders.isEmpty()) {
+        //     return BaseResponse.error(
+        //             HttpStatus.NOT_FOUND,
+        //             "No orders found for user",
+        //             List.of("No orders found for user ID = " + userId));
+        // }
         return BaseResponse.success(orders, "Fetched orders for user successfully");
     }
 }
